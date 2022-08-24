@@ -39,7 +39,17 @@ class ChromeTest {
 
     @Test
     void shouldTestPositive() {
-        driver.findElement(cssSelector("[data-test-id='name'] input")).sendKeys("Тимофей Чернасов");
+        driver.findElement(cssSelector("[data-test-id='name'] input")).sendKeys("Петр Петров");
+        driver.findElement(cssSelector("[data-test-id='phone'] input")).sendKeys("+79101105214");
+        driver.findElement(cssSelector("[data-test-id='agreement']")).click();
+        driver.findElement(cssSelector("[type='button']")).click();
+        String actual = driver.findElement(cssSelector("[data-test-id='order-success']")).getText().trim();
+        String expected = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
+        assertEquals(expected, actual);
+    }
+    @Test
+    void shouldTest2Positive() {
+        driver.findElement(cssSelector("[data-test-id='name'] input")).sendKeys("Петр Петров-Иванов");
         driver.findElement(cssSelector("[data-test-id='phone'] input")).sendKeys("+79101105214");
         driver.findElement(cssSelector("[data-test-id='agreement']")).click();
         driver.findElement(cssSelector("[type='button']")).click();
@@ -93,13 +103,12 @@ class ChromeTest {
     }
 
     @Test
-    void shouldTestNegativeCheckboxEmpty() {
-        driver.findElement(cssSelector("[data-test-id='name'] input")).sendKeys("Эдуард Васильев");
-        driver.findElement(cssSelector("[data-test-id='phone'] input")).sendKeys("+70123456789");
-        driver.findElement(cssSelector("[type='button']")).click();
-        String actual = driver.findElement(cssSelector("[data-test-id='agreement'].input_invalid .checkbox__text")).getCssValue("color");
-        String expected = "rgba(255, 92, 92, 1)";
-        assertEquals(expected, actual);
+    public void shouldShowErrorWithoutAgreementInCheckBox() {
+        driver.get("http://localhost:9999");
+        driver.findElement(By.cssSelector("[type='text']")).sendKeys("Иванов Иван");
+        driver.findElement(By.cssSelector("[type='tel']")).sendKeys("+79012345678");
+        driver.findElement(By.cssSelector("button")).click();
+        driver.findElement(By.cssSelector(".input_invalid"));
     }
 }
 
