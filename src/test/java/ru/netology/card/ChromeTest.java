@@ -109,7 +109,7 @@ class ChromeTest {
         driver.findElement(By.cssSelector("[type='tel']")).sendKeys("+79012345678");
         driver.findElement(By.cssSelector("button")).click();
         String actual = driver.findElement(cssSelector("[data-test-id=agreement].input_invalid")).getText().trim();
-        String expected = "Поле обязательно для заполнения";
+        String expected = "Я соглашаюсь с условиями обработки и использования моих персональных данных и разрешаю сделать запрос в бюро кредитных историй";
         assertEquals(expected, actual);
     }
 }
